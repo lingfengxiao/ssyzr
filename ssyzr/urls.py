@@ -16,9 +16,13 @@ Including another URLconf
 from django.conf.urls import url, include
 from django.contrib import admin
 
+
+
 urlpatterns = [
     url(r'^admin/', admin.site.urls),
-    url(r'^blog/', include('boke.url', namespace='boke'))
+    url(r'^blog/', include('boke.urls')),
+    url(r'^ckeditor/', include('ckeditor_uploader.urls'))
 ]
+
 
 
