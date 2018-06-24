@@ -1,0 +1,36 @@
+{% extends "base.html" %}
+{% block css %}
+    <style>
+        a {
+            color: #7ea99b;
+            text-decoration: none;
+        }
+    </style>
+{% endblock %}
+{% block content %}
+    <span style="margin:100px"></span>
+    {% for item in namelist %}
+        <div class="col-md-12">
+            <h3><a class="titlelnk" href="/blog/{{ item.id }}" target="_blank">{{ item.title }}</a></h3>
+                {{ item.text|safe }}
+            <div>
+                <a href="#" style="color: lightblue">{{ item.author }}</a>
+                发布于 {{ item.updatetime }}
+                <span style="float: right">
+                        tags：
+                    {% for tag in item.tags %}
+                        <a href="#"><strong>{{ tag }}</strong></a>
+                    {% endfor %}
+                    </span>
+                {#                    <hr style="border:none;height: 1px;color: #6B6B6B;margin: 10px solid">#}
+                <hr style="height:1px;border:none;border-top:1px solid #555555;margin-top: 8px">
+            </div>
+        </div>
+
+
+
+    {% endfor %}
+
+{% endblock %}
+
+

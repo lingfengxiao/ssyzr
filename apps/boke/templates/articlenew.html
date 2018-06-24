@@ -1,0 +1,112 @@
+<!DOCTYPE html>
+{% extends "base.html" %}
+<html lang="zh-cn">
+<head>
+    <meta charset="UTF-8">
+    {% block title %}新增博客{% endblock %}
+</head>
+{% block content %}
+
+    <div class='col-md-11' ; style="padding: 100px 100px 10px;">
+        <form id="form_1" class="bs-example bs-example-form" role="form" method="post" action="/blog/create">
+            <div class="input-group">
+                <span class="input-group-addon">标题</span>
+                <input type="text" class="form-control" placeholder="" name="title">
+            </div>
+            <br>
+            <div class="input-group" style="width: 100%;">
+                <input type="textarea" class="form-control" id="id_content">
+            </div>
+            <div class="checkbox" style="margin-top: 30px;">
+                <label>
+                    <input type="checkbox" name="hidden"> 设为私密
+                </label>
+            </div>
+            <br>
+
+            <div style="width: 10%">
+                <button id="submit" onclick="summitform()" class="btn btn-primary btn-block"
+                        style="background-color: #0f74a8">提交
+                </button>
+            </div>
+        </form>
+    </div>
+
+
+
+{% endblock %}
+
+</html>
+
+{% block script %}
+    <script src="https://cdn.ckeditor.com/4.9.2/full-all/ckeditor.js"></script>
+    <script>
+        CKEDITOR.replace('id_content', {
+            extraPlugins: 'image2,uploadimage',
+            extraPlugins: 'codesnippet',
+            name: 'content',
+
+            toolbar: [
+                {name: 'document', items: ['Source', '-', 'Save', 'NewPage', 'Preview', 'Print', '-', 'Templates']},
+                {name: 'clipboard', items: ['Cut', 'Copy', 'Paste', 'PasteText', 'PasteFromWord', '-', 'Undo', 'Redo']},
+                {name: 'editing', items: ['Find', 'Replace', '-', 'SelectAll', '-', 'Scayt']},
+                {
+                    name: 'basicstyles',
+                    items: ['Bold', 'Italic', 'Underline', 'Strike', 'Subscript', 'Superscript', '-', 'CopyFormatting', 'RemoveFormat']
+                },
+                {
+                    name: 'paragraph',
+                    items: ['NumberedList', 'BulletedList', '-', 'Outdent', 'Indent', '-', 'Blockquote', , '-', 'JustifyLeft', 'JustifyCenter', 'JustifyRight', 'JustifyBlock']
+                },
+                {name: 'links', items: ['Link', 'Unlink', 'Anchor']},
+                {
+                    name: 'insert',
+                    items: ['Image', 'CodeSnippet', 'Flash', 'Table', 'HorizontalRule', 'Smiley', 'SpecialChar', 'PageBreak']
+                },
+                '/',
+                {name: 'styles', items: ['Styles', 'Format', 'Font', 'FontSize']},
+                {name: 'colors', items: ['TextColor', 'BGColor']},
+                {name: 'tools', items: ['Maximize', 'ShowBlocks']},
+            ],
+            filebrowserImageUploadUrl: '/blog/uploadImg/',
+            format_tags: 'p;h1;h2;h3;pre',
+            removeDialogTabs: 'image:advanced;link:advanced',
+            height: 800
+        });
+    </script>
+    <script>
+        function summitform() {
+            function CKupdate() {
+                for (instance in CKEDITOR.instances)
+                    CKEDITOR.instances[instance].updateElement();
+            }
+            CKupdate();
+            var data1 = $('#form_1').serialize();
+            var submitData = decodeURIComponent(data1, true);
+            //submitData是解码后的表单数据，结果同上
+            $.ajax({
+                url: '/blog/create',
+                data: data1,
+                method: 'POST',
+                {#                cache: false,//false是不缓存，true为缓存#}
+                {#                async: true,//true为异步，false为同步#}
+                beforeSend: function () {
+                    console.log(submitData)
+                },
+                success: function (result) {
+                    //请求成功时
+                },
+                complete: function () {
+                    //请求结束时
+                },
+                error: function () {
+                    //请求失败时
+                }
+            })
+        }
+
+    </script>
+{% endblock %}
+</body>
+
+</html>

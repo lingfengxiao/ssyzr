@@ -40,13 +40,14 @@ INSTALLED_APPS = [
     'ckeditor',
     'ckeditor_uploader',
     'apps.boke',
+    'apps.usersetting',
 ]
 
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
     'django.middleware.common.CommonMiddleware',
-    'django.middleware.csrf.CsrfViewMiddleware',
+    # 'django.middleware.csrf.CsrfViewMiddleware',
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
@@ -72,7 +73,7 @@ TEMPLATES = [
 ]
 
 WSGI_APPLICATION = 'ssyzr.wsgi.application'
-
+AUTH_USER_MODEL = 'usersetting.NewUser'
 # Database
 # https://docs.djangoproject.com/en/1.11/ref/settings/#databases
 
@@ -83,7 +84,7 @@ DATABASES = {
         'HOST': '47.75.165.92',
         'PORT': '3306',
         'USER': 'root',
-        'PASSWORD':
+        'PASSWORD': 'xiaoxiao'
     }
 }
 
@@ -122,6 +123,10 @@ USE_TZ = True
 # https://docs.djangoproject.com/en/1.11/howto/static-files/
 
 STATIC_URL = '/static/'
+STATICFILES_DIRS = (
+    os.path.join(BASE_DIR, 'static'),
+)
+STATIC_ROOT = os.path.join(BASE_DIR, 'collect_static')
 
 
 MEDIA_URL = "/media/"
@@ -129,7 +134,9 @@ MEDIA_ROOT = os.path.join(BASE_DIR, "media")
 CKEDITOR_UPLOAD_PATH = "article_images"
 
 CKEDITOR_CONFIGS = {
+
     'default': {
+'extraPlugins': ['image2','uploadimage'],
         'update': ['Image', 'Update', 'Flash', 'Table', 'HorizontalRule', 'Smiley', 'SpecialChar', 'PageBreak'],
         'skin': 'moono',
         # 'skin': 'office2013',

@@ -17,9 +17,20 @@ from django.conf.urls import url, include
 from django.contrib import admin
 from django.views.static import serve
 from ssyzr import settings
+from apps.boke.views import articlelist
+from apps.usersetting.views import login_view,logout_view,login_view_html
+
 urlpatterns = [
+    url(r'^account/login&Redirect&(?P<redurl>.+?)$',login_view,name='login'),
+    url(r'^account/login$',login_view_html,name='login'),
+]
+
+
+urlpatterns += [
     url(r'^admin/', admin.site.urls),
     url(r'^blog/', include('boke.urls')),
+    url(r'^index/', articlelist),
+    url(r'^$', articlelist),
     url(r'^media/(?P<path>.*)$', serve, {'document_root': settings.MEDIA_ROOT}),
     url(r'^ckeditor/', include('ckeditor_uploader.urls'))
 ]
